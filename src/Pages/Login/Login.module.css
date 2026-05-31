@@ -1,0 +1,269 @@
+/* ─── Variáveis ──────────────────────────────────────────────────────────── */
+:root {
+  --sus-green: #1B6B3A;
+  --sus-green-dark: #155230;
+  --sus-green-light: #E8F5EE;
+}
+
+/* ─── Container principal ────────────────────────────────────────────────── */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #F3F4F6;
+}
+
+/* ─── Header verde ───────────────────────────────────────────────────────── */
+.header {
+  background: linear-gradient(135deg, var(--sus-green-dark) 0%, var(--sus-green) 100%);
+  padding: 48px 24px 36px;
+  border-radius: 0 0 28px 28px;
+  text-align: center;
+}
+
+.headerLogoBox {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  margin: 0 auto 12px;
+}
+
+.headerTitle {
+  color: #fff;
+  font-size: 26px;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  margin: 0 0 4px;
+}
+
+.headerSubtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  margin: 0;
+}
+
+/* ─── Formulário ─────────────────────────────────────────────────────────── */
+.form {
+  flex: 1;
+  padding: 28px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.formTitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 4px;
+}
+
+.formSubtitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  color: #6B7280;
+  margin: 0 0 8px;
+}
+
+/* ─── Campos de input ────────────────────────────────────────────────────── */
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inputLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.inputContainer {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #D1D5DB;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  color: #111827;
+  background: #FAFAFA;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--sus-green);
+}
+
+.inputWithIcon {
+  padding-right: 44px;
+}
+
+.inputError {
+  border-color: #EF4444;
+}
+
+.inputErrorText {
+  font-size: 12px;
+  color: #EF4444;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.inputHint {
+  font-size: 12px;
+  color: #6B7280;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.eyeButton {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9CA3AF;
+  padding: 0;
+}
+
+/* ─── Mensagem de erro da API ────────────────────────────────────────────── */
+.apiErrorBox {
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.apiErrorText {
+  font-size: 13px;
+  color: #B91C1C;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ─── Link "Esqueci minha senha" ─────────────────────────────────────────── */
+.forgotWrapper {
+  text-align: right;
+}
+
+.forgotButton {
+  background: none;
+  border: none;
+  color: var(--sus-green);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ─── Botão principal ────────────────────────────────────────────────────── */
+.submitButton {
+  background: linear-gradient(135deg, var(--sus-green-dark), var(--sus-green));
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(27, 107, 58, 0.33);
+  transition: transform 0.1s;
+  margin-top: 4px;
+}
+
+.submitButton:disabled {
+  background: #9CA3AF;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.submitButton:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+/* ─── Link para cadastro ─────────────────────────────────────────────────── */
+.registerText {
+  text-align: center;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  color: #6B7280;
+  margin: 0;
+}
+
+.registerLink {
+  background: none;
+  border: none;
+  color: var(--sus-green);
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  padding: 0;
+}
+
+/* ─── Tela de Sucesso ────────────────────────────────────────────────────── */
+.successContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #F3F4F6;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.successContent {
+  text-align: center;
+  max-width: 320px;
+}
+
+.successIcon {
+  margin-bottom: 16px;
+}
+
+.successTitle {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 8px;
+}
+
+.successText {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  color: #6B7280;
+  margin: 0 0 32px;
+  line-height: 1.6;
+}
+
+.successButton {
+  background: linear-gradient(135deg, var(--sus-green-dark), var(--sus-green));
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 15px 48px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(27, 107, 58, 0.33);
+}

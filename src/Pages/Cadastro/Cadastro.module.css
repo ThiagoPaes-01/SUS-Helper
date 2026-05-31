@@ -1,0 +1,298 @@
+/* ─── Variáveis ──────────────────────────────────────────────────────────── */
+:root {
+  --sus-green: #1B6B3A;
+  --sus-green-dark: #155230;
+  --sus-green-light: #E8F5EE;
+}
+
+/* ─── Container principal ────────────────────────────────────────────────── */
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #F3F4F6;
+}
+
+/* ─── Header verde ───────────────────────────────────────────────────────── */
+.header {
+  background: linear-gradient(135deg, var(--sus-green-dark) 0%, var(--sus-green) 100%);
+  padding: 36px 24px 28px;
+  border-radius: 0 0 28px 28px;
+}
+
+.headerBrand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.headerBrandIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.headerBrandName {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.headerTitle {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  margin: 0 0 4px;
+}
+
+.headerSubtitle {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  margin: 0;
+}
+
+/* ─── Barra de progresso ─────────────────────────────────────────────────── */
+.progressTrack {
+  margin-top: 16px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+.progressBar {
+  height: 100%;
+  background: #fff;
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+/* ─── Formulário ─────────────────────────────────────────────────────────── */
+.form {
+  flex: 1;
+  padding: 20px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ─── Campos de input ────────────────────────────────────────────────────── */
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inputLabel {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.inputContainer {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #D1D5DB;
+  font-size: 15px;
+  font-family: 'DM Sans', sans-serif;
+  color: #111827;
+  background: #FAFAFA;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.input:focus {
+  border-color: var(--sus-green);
+}
+
+.inputWithIcon {
+  padding-right: 44px;
+}
+
+.inputError {
+  border-color: #EF4444;
+}
+
+.inputErrorText {
+  font-size: 12px;
+  color: #EF4444;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.inputHint {
+  font-size: 12px;
+  color: #6B7280;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.eyeButton {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9CA3AF;
+  padding: 0;
+}
+
+/* ─── Indicador de força da senha ────────────────────────────────────────── */
+.strengthTrack {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.strengthBar {
+  flex: 1;
+  height: 3px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.strengthBarFilled {
+  background: var(--sus-green);
+}
+
+.strengthBarWeak {
+  background: #F59E0B;
+}
+
+.strengthBarEmpty {
+  background: #E5E7EB;
+}
+
+.strengthLabel {
+  font-size: 11px;
+  color: #6B7280;
+  font-family: 'DM Sans', sans-serif;
+}
+
+/* ─── Cartão CNS ─────────────────────────────────────────────────────────── */
+.cnsCard {
+  background: linear-gradient(135deg, var(--sus-green-dark), var(--sus-green));
+  border-radius: 16px;
+  padding: 16px 20px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.cnsCardLabel {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  opacity: 0.7;
+  font-family: 'DM Sans', sans-serif;
+  margin-bottom: 6px;
+}
+
+.cnsCardNumber {
+  font-size: 20px;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.cnsCardName {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  opacity: 0.9;
+}
+
+/* ─── Aviso LGPD ─────────────────────────────────────────────────────────── */
+.lgpdBox {
+  background: var(--sus-green-light);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.lgpdIcon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.lgpdText {
+  margin: 0;
+  font-size: 12px;
+  color: #374151;
+  font-family: 'DM Sans', sans-serif;
+  line-height: 1.5;
+}
+
+/* ─── Botão principal ────────────────────────────────────────────────────── */
+.submitButton {
+  background: linear-gradient(135deg, var(--sus-green-dark), var(--sus-green));
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 15px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  margin-top: 4px;
+  transition: transform 0.1s, opacity 0.2s;
+  box-shadow: 0 4px 14px rgba(27, 107, 58, 0.33);
+}
+
+.submitButton:disabled {
+  background: #9CA3AF;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.submitButton:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+/* ─── Botão Voltar ───────────────────────────────────────────────────────── */
+.backButton {
+  background: none;
+  border: none;
+  color: var(--sus-green);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px;
+}
+
+/* ─── Link para login ────────────────────────────────────────────────────── */
+.loginText {
+  text-align: center;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  color: #6B7280;
+  margin: 0;
+}
+
+.loginLink {
+  background: none;
+  border: none;
+  color: var(--sus-green);
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'DM Sans', sans-serif;
+  padding: 0;
+}
