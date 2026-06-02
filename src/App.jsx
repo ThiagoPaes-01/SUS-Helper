@@ -1,15 +1,16 @@
 import { useState, useEffect } from "react";
-import { Login, SuccessScreen } from "./Pages/Login/Login.jsx";
-import { Cadastro }             from "./Pages/Cadastro/Cadastro.jsx";
-import { Menu }                 from "./Pages/Menu/Menu.jsx";
-import { MapPosto }             from "./Pages/MapPosto/MapPosto.jsx";
+import { Login }    from "./Pages/Login/Login.jsx";
+import { Cadastro } from "./Pages/Cadastro/Cadastro.jsx";
+import { Menu }     from "./Pages/Menu/Menu.jsx";
+import { MapPosto } from "./Pages/MapPosto/MapPosto.jsx";
+import { Historico } from "./Pages/Historico/Historico.jsx";
 import { signIn, signUp, signOut, getUserProfile } from "./services/authService.js";
 
-// Páginas: "login" | "cadastro" | "successLogin" | "successCadastro" | "menu" | "postos"
+// Páginas: "login" | "cadastro" | "menu" | "postos" | "historico"
 
 export function App() {
-  const [page, setPage]   = useState("login");
-  const [user, setUser]   = useState(null);
+  const [page, setPage]           = useState("login");
+  const [user, setUser]           = useState(null);
   const [activeNav, setActiveNav] = useState("inicio");
 
   // Verifica sessão ativa ao abrir o app
@@ -19,25 +20,26 @@ export function App() {
     });
   }, []);
 
-  // ── Auth ────────────────────────────────────────────────────────────────────
+  // ── Login ──────────────────────────────────────────────────────────────────
   const handleLogin = async (email, password) => {
     const ok = await signIn(email, password);
     if (ok) {
       const profile = await getUserProfile();
       setUser(profile);
-      setPage("successLogin");
+      setPage("menu"); // vai direto para o menu
     }
     return ok;
   };
 
+  // ── Cadastro ───────────────────────────────────────────────────────────────
   const handleCadastro = async (formData) => {
     await signUp(formData);
     const profile = await getUserProfile();
     setUser(profile);
-    setPage("successCadastro");
+    setPage("menu"); // vai direto para o menu
   };
 
-  // Botão Sair — limpa sessão e volta para login
+  // ── Logout ─────────────────────────────────────────────────────────────────
   const handleLogout = async () => {
     await signOut();
     setUser(null);
@@ -45,28 +47,38 @@ export function App() {
     setPage("login");
   };
 
-  // ── Navegação da navbar ─────────────────────────────────────────────────────
+  // ── Navegação ──────────────────────────────────────────────────────────────
   const handleNavChange = (id) => {
     setActiveNav(id);
-    if (id === "postos") { setPage("postos"); return; }
-    setPage("menu"); 
+    if (id === "postos")    { setPage("postos");    return; }
+    if (id === "historico") { setPage("historico"); return; }
+    setPage("menu");
   };
 
-  // ── Renderização ────────────────────────────────────────────────────────────
+  const voltarParaMenu = () => { setActiveNav("inicio"); setPage("menu"); };
+
+  // ── Renderização ───────────────────────────────────────────────────────────
   if (page === "login")
-    return <Login onLogin={handleLogin} onSuccess={() => setPage("successLogin")} onCadastro={() => setPage("cadastro")} />;
+    return (
+      <Login
+        onLogin={handleLogin}
+        onCadastro={() => setPage("cadastro")}
+      />
+    );
 
   if (page === "cadastro")
-    return <Cadastro onCadastro={handleCadastro} onLogin={() => setPage("login")} />;
-
-  if (page === "successLogin")
-    return <SuccessScreen type="login" onContinue={() => setPage("menu")} />;
-
-  if (page === "successCadastro")
-    return <SuccessScreen type="cadastro" onContinue={() => setPage("menu")} />;
+    return (
+      <Cadastro
+        onCadastro={handleCadastro}
+        onLogin={() => setPage("login")}
+      />
+    );
 
   if (page === "postos")
-    return <MapPosto onBack={() => { setActiveNav("inicio"); setPage("menu"); }} />;
+    return <MapPosto onBack={voltarParaMenu} />;
+
+  if (page === "historico")
+    return <Historico onBack={voltarParaMenu} />;
 
   if (page === "menu") {
     if (!user) return <div>Carregando...</div>;
@@ -75,7 +87,11 @@ export function App() {
         user={user}
         activeNav={activeNav}
         onNavChange={handleNavChange}
-        onActionPress={(id) => console.log("acao:", id)}
+        onActionPress={(id) => {
+          if (id === 3) handleNavChange("postos");    // Encontrar posto
+          if (id === 1) handleNavChange("historico"); // Marcar consulta
+          if (id === 2) handleNavChange("historico"); // Ver exames
+        }}
         onLogout={handleLogout}
       />
     );
