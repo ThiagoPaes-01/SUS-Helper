@@ -1,31 +1,25 @@
 import { useState, useEffect } from "react";
 import { Login, SuccessScreen } from "./Pages/Login/Login.jsx";
-import { Cadastro } from "./Pages/Cadastro/Cadastro.jsx";
-import { Menu } from "./Pages/Menu/Menu.jsx";
-import {
-  signIn,
-  signUp,
-  signOut,
-  getUserProfile,
-} from "./services/authService.js";
+import { Cadastro }             from "./Pages/Cadastro/Cadastro.jsx";
+import { Menu }                 from "./Pages/Menu/Menu.jsx";
+import { MapPosto }             from "./Pages/MapPosto/MapPosto.jsx";
+import { signIn, signUp, signOut, getUserProfile } from "./services/authService.js";
 
-// Páginas "login" | "cadastro" | "successLogin" | "successCadastro" | "menu"
+// Páginas: "login" | "cadastro" | "successLogin" | "successCadastro" | "menu" | "postos"
 
 export function App() {
-  const [page, setPage] = useState("login");
-  const [user, setUser] = useState(null);
+  const [page, setPage]   = useState("login");
+  const [user, setUser]   = useState(null);
+  const [activeNav, setActiveNav] = useState("inicio");
 
-  // ─── Ao abrir o app, verifica se já tem sessão ativa ───────────────────────
+  // Verifica sessão ativa ao abrir o app
   useEffect(() => {
-    getUserProfile().then((profile) => {
-      if (profile) {
-        setUser(profile);
-        setPage("menu");
-      }
+    getUserProfile().then(profile => {
+      if (profile) { setUser(profile); setPage("menu"); }
     });
   }, []);
 
-  // ─── Login ─────────────────────────────────────────────────────────────────
+  // ── Auth ────────────────────────────────────────────────────────────────────
   const handleLogin = async (email, password) => {
     const ok = await signIn(email, password);
     if (ok) {
@@ -36,7 +30,6 @@ export function App() {
     return ok;
   };
 
-  // ─── Cadastro ──────────────────────────────────────────────────────────────
   const handleCadastro = async (formData) => {
     await signUp(formData);
     const profile = await getUserProfile();
@@ -44,27 +37,27 @@ export function App() {
     setPage("successCadastro");
   };
 
-  // ─── Logout ────────────────────────────────────────────────────────────────
+  // Botão Sair — limpa sessão e volta para login
   const handleLogout = async () => {
     await signOut();
     setUser(null);
+    setActiveNav("inicio");
     setPage("login");
   };
 
-  // ─── Renderização ──────────────────────────────────────────────────────────
+  // ── Navegação da navbar ─────────────────────────────────────────────────────
+  const handleNavChange = (id) => {
+    setActiveNav(id);
+    if (id === "postos") { setPage("postos"); return; }
+    setPage("menu"); 
+  };
+
+  // ── Renderização ────────────────────────────────────────────────────────────
   if (page === "login")
-    return (
-      <Login
-        onLogin={handleLogin}
-        onSuccess={() => setPage("successLogin")}
-        onCadastro={() => setPage("cadastro")}
-      />
-    );
+    return <Login onLogin={handleLogin} onSuccess={() => setPage("successLogin")} onCadastro={() => setPage("cadastro")} />;
 
   if (page === "cadastro")
-    return (
-      <Cadastro onCadastro={handleCadastro} onLogin={() => setPage("login")} />
-    );
+    return <Cadastro onCadastro={handleCadastro} onLogin={() => setPage("login")} />;
 
   if (page === "successLogin")
     return <SuccessScreen type="login" onContinue={() => setPage("menu")} />;
@@ -72,13 +65,16 @@ export function App() {
   if (page === "successCadastro")
     return <SuccessScreen type="cadastro" onContinue={() => setPage("menu")} />;
 
+  if (page === "postos")
+    return <MapPosto onBack={() => { setActiveNav("inicio"); setPage("menu"); }} />;
+
   if (page === "menu") {
     if (!user) return <div>Carregando...</div>;
     return (
       <Menu
         user={user}
-        activeNav="inicio"
-        onNavChange={(id) => console.log("nav:", id)}
+        activeNav={activeNav}
+        onNavChange={handleNavChange}
         onActionPress={(id) => console.log("acao:", id)}
         onLogout={handleLogout}
       />

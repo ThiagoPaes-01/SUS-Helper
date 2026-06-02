@@ -2,24 +2,14 @@ import styles from "./Menu.module.css";
 
 // ─── Dados estáticos de UI (não vêm do banco) ─────────────────────────────────
 const notifications = [
-  {
-    id: 1,
-    icon: "💉",
-    text: "Vacina da gripe disponível na sua UBS",
-    variant: "yellow",
-  },
-  {
-    id: 2,
-    icon: "⏰",
-    text: "Você não visita o médico há 8 meses",
-    variant: "red",
-  },
+  { id: 1, icon: "💉", text: "Vacina da gripe disponível na sua UBS",  variant: "yellow" },
+  { id: 2, icon: "⏰", text: "Você não visita o médico há 8 meses",    variant: "red"    },
 ];
 
 const actions = [
   { id: 1, icon: "📅", title: "Marcar consulta",  subtitle: "Agendar atendimento",  color: "Green"  },
   { id: 2, icon: "🔬", title: "Ver exames",        subtitle: "Resultados e pedidos", color: "Blue"   },
-  { id: 3, icon: "🍭", title: "Encontrar posto",   subtitle: "UBS mais próxima",     color: "Yellow" },
+  { id: 3, icon: "🗺️", title: "Encontrar posto",   subtitle: "UBS mais próxima",     color: "Yellow" },
   { id: 4, icon: "💊", title: "Meus remédios",     subtitle: "Receitas e lista",     color: "Pink"   },
   { id: 5, icon: "💬", title: "Tirar dúvida",      subtitle: "Assistente SUS",       color: "Purple" },
   { id: 6, icon: "⭐", title: "Avaliar posto",      subtitle: "Sua opinião importa",  color: "Orange" },
@@ -27,24 +17,13 @@ const actions = [
 
 const navItems = [
   { id: "inicio",    icon: "🏠", label: "Início"    },
-  { id: "postos",    icon: "📍", label: "Postos"    },
+  { id: "postos",    icon: "🗺️", label: "Postos"    },  
   { id: "historico", icon: "📋", label: "Histórico" },
   { id: "ajuda",     icon: "💬", label: "Ajuda"     },
   { id: "docs",      icon: "📄", label: "Docs"      },
 ];
 
-// ─── Componente Menu ──────────────────────────────────────────────────────────
-// Props vindas do banco:
-//   user.name       → primeiro nome do usuário
-//   user.initials   → inicial(is) para o avatar
-//   user.cnsNumber  → número do Cartão Nacional de Saúde formatado
-//   user.cnsName    → nome completo em caixa alta
-//
-// Props de navegação:
-//   activeNav       → id do item ativo na navbar
-//   onNavChange     → callback ao trocar de aba
-//   onActionPress   → callback ao clicar em uma ação rápida
-export function Menu({ user, activeNav, onNavChange, onActionPress }) {
+export function Menu({ user, activeNav, onNavChange, onActionPress, onLogout }) {
   return (
     <div className={styles.container}>
 
@@ -54,7 +33,20 @@ export function Menu({ user, activeNav, onNavChange, onActionPress }) {
           <span className={styles.headerGreeting}>Olá, {user.name} 👋</span>
           <span className={styles.headerQuestion}>O que você precisa hoje?</span>
         </div>
-        <div className={styles.headerAvatar}>{user.initials}</div>
+
+        <div className={styles.headerRight}>
+          {/* Avatar */}
+          <div className={styles.headerAvatar}>{user.initials}</div>
+
+          {/* Botão Sair */}
+          <button
+            className={styles.logoutBtn}
+            onClick={onLogout}
+            title="Sair da conta"
+          >
+            <span className={styles.logoutLabel}>Sair</span>
+          </button>
+        </div>
       </div>
 
       {/* ── Corpo ── */}
@@ -91,7 +83,11 @@ export function Menu({ user, activeNav, onNavChange, onActionPress }) {
             <button
               key={a.id}
               className={[styles.actionCard, styles[`actionCard${a.color}`]].join(" ")}
-              onClick={() => onActionPress?.(a.id)}
+              onClick={() => {
+                // Ação "Encontrar posto" vai direto para o MapPosto
+                if (a.id === 3) { onNavChange?.("postos"); return; }
+                onActionPress?.(a.id);
+              }}
             >
               <span className={styles.actionIcon}>{a.icon}</span>
               <span className={styles.actionTitle}>{a.title}</span>
